@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 bg-light">
+    <div class="container">
+        <h1 class="mb-3">{% block title %} Upload your Excel file {% endblock %}</h1>
+         <p>
+            Select an Excel file to upload. The application will process your file, perform data operations, and return a new Excel file for you to download.
+        </p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input class="form-control form-control-lg" type="file" name="file" id="file" accept=".xlsx,.xls"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="uploadBtn" disabled>Upload</button>
+        </form>
+    </div>
+</div>
+<form action="{{ url_for('shutdown') }}" method="post" style="margin-top:2em;">
+    <button type="submit" class="btn btn-danger">Quit Application</button>
+</form>
+
+<script>
+    const fileInput = document.getElementById('file');
+    const uploadBtn = document.getElementById('uploadBtn');
+    fileInput.addEventListener('change', function () {
+        uploadBtn.disabled = !fileInput.value;
+    });
+</script>
+{% endblock %}
